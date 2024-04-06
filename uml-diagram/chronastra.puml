@@ -2,7 +2,8 @@
 
 
 class Event{
-    + Event(is_all_day: bool, start_date: Date, end_date: Date, start_str: string, title: string, url: string)
+    + Event(is_all_day: bool, start_date: Date, end_date: Date, title: string, url: string, resource_id: string,
+        group_id: string)
     + setAllDay(is_all_day: bool): void
     + IsAllDay(): bool
     + setStartDate(start_date: Date): void
@@ -24,7 +25,16 @@ class Event{
     - start_str: string
     - title: string
     - url: string
+    - resource_id: string
 }
 
+
+class EventFormatter{
+    {static} + to_skit_lean(event: Event): Dict
+    {static} + to_outlook(event: Event): Unknown
+}
+
+
+Event ..> EventFormatter : dependency
 
 @enduml

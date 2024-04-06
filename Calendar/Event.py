@@ -3,16 +3,16 @@ import uuid
 
 
 class Event:
-    def __init__(self, is_all_day: bool, start_date: datetime, end_date: datetime, start_str: str, title: str,
-                 url: str, group_id: str = None):
+    def __init__(self, is_all_day: bool, start_date: datetime, end_date: datetime, title: str,
+                 url: str, group_id: str = None, resource_id: str = None):
         self._id = str(uuid.uuid4())
         self._is_all_day = is_all_day
         self._start_date = start_date
         self._end_date = end_date
-        self._start_str = start_str
         self._title = title
         self._url = url
         self._group_id = group_id
+        self._resource_id = resource_id
 
     def set_all_day(self, is_all_day: bool):
         self._is_all_day = is_all_day
@@ -32,12 +32,6 @@ class Event:
     def get_end_date(self) -> datetime:
         return self._end_date
 
-    def set_start_str(self, start_str: str):
-        self._start_str = start_str
-
-    def get_start_str(self) -> str:
-        return self._start_str
-
     def set_title(self, title: str):
         self._title = title
 
@@ -53,5 +47,14 @@ class Event:
     def get_id(self) -> str:
         return self._id
 
+    def set_group_id(self, group_id: str):
+        self._group_id = group_id
+
     def get_group_id(self) -> str:
         return self._group_id
+
+    def set_resource_id(self, resource_id: str):
+        self._resource_id = resource_id
+
+    def get_resource_id(self) -> str:
+        return self._resource_id
