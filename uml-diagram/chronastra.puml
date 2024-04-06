@@ -1,0 +1,30 @@
+@startuml
+
+
+class Event{
+    + Event(is_all_day: bool, start_date: Date, end_date: Date, start_str: string, title: string, url: string)
+    + setAllDay(is_all_day: bool): void
+    + IsAllDay(): bool
+    + setStartDate(start_date: Date): void
+    + getStartDate(): Date
+    + setEndDate(end_date: Date): void
+    + getEndDate(): Date
+    + setStartStr(start_str: string): void
+    + getStartStr(): string
+    + setTitle(title: string): void
+    + getTitle(): string
+    + setUrl(url: string): void
+    + getUrl(): string
+    ===
+    - id: string
+    - group_id: string
+    - is_all_day: bool
+    - start_date: Date
+    - end_date: Date
+    - start_str: string
+    - title: string
+    - url: string
+}
+
+
+@enduml
