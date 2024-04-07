@@ -33,17 +33,40 @@ class EventFormatter{
 }
 
 class EventsExporter{
-    {static} + to_json(collection<event>: Events): void
-    {static} + to_xml(collection<event>: Events): void
+    {static} + to_json(collection<Event>: events): void
+    {static} + to_xml(collection<Event>: events): void
 }
 
 class EventsImporter{
-    {static} + from_json(json_file: File): collection<event>
-    {static} + from_xml(xml_file: File): collection<event>
+    {static} + from_json(json_file: File): collection<Event>
+    {static} + from_xml(xml_file: File): collection<Event>
 }
 
+class StCalendar{
+    + StCalendar(style: string, mode_opt: string, events: collection<Event>, calendar_opts: collection<Options>)
+    ===
+    + setStyle(style: string): void
+    + getStyle(): string
+    ===
+    + setEvents(events: collection<Options>)
+    + getEvents(): collection<Event>
+    + addEvent(event: Event): void
+    + removeEvent(id: collection_id): void
+    ===
+    + getCalendarOpts(): collection<Option>
+    + setCalendarOpts(options: collection<Option>): void
+    + addCalendarOpt(option: Option): void
+    + removeCalendarOpt(id: collection_id): void
+    ===
+    - mode: st.selectbox
+    - style: string
+    - events: collection<Event>
+    - calendar_opts: collection<Option>
+    - current_calendar_opt: Option
+    - calendar_wrapper: st.calendar
+}
 
-
+StCalendar o-- Event
 Event ..> EventFormatter : dependency
 Event ..> EventsExporter : dependency
 Event ..> EventsImporter : dependency

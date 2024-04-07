@@ -2,10 +2,10 @@ import streamlit as st
 
 from streamlit_calendar import calendar
 
-st.set_page_config(page_title="Calendar App", page_icon="📆")
+st.set_page_config(page_title="calendar App", page_icon="📆")
 #
 #mode = st.selectbox(
-#    "Calendar Mode:",
+#    "calendar Mode:",
 #    (
 #        "daygrid",
 #        "timegrid",
