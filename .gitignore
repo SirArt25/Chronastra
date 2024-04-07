@@ -110,6 +110,6 @@ dmypy.json
 
 
 # png
-*.png
+/uml-diagram/*.png
 
 # End of file

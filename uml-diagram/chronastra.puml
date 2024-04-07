@@ -1,6 +1,4 @@
 @startuml
-
-
 class Event{
     + Event(is_all_day: bool, start_date: Date, end_date: Date, title: string, url: string, resource_id: string,
         group_id: string)
@@ -34,7 +32,19 @@ class EventFormatter{
     {static} + to_outlook(event: Event): Unknown
 }
 
+class EventsExporter{
+    {static} + to_json(collection<event>: Events): void
+    {static} + to_xml(collection<event>: Events): void
+}
+
+class EventsImporter{
+    {static} + from_json(json_file: File): collection<event>
+    {static} + from_xml(xml_file: File): collection<event>
+}
+
+
 
 Event ..> EventFormatter : dependency
-
+Event ..> EventsExporter : dependency
+Event ..> EventsImporter : dependency
 @enduml
