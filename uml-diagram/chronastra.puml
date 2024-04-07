@@ -2,16 +2,22 @@
 class Event{
     + Event(is_all_day: bool, start_date: Date, end_date: Date, title: string, url: string, resource_id: string,
         group_id: string)
+    ===
     + set_all_day(is_all_day: bool): void
     + is_all_day(): bool
+    ===
     + set_start_date(start_date: Date): void
     + get_start_date(): Date
+    ===
     + set_end_date(end_date: Date): void
     + get_end_date(): Date
+    ===
     + set_start_str(start_str: string): void
     + get_start_str(): string
+    ===
     + set_title(title: string): void
     + get_title(): string
+    ===
     + set_url(url: string): void
     + get_url(): string
     ===

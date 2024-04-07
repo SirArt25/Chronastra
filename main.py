@@ -1,21 +1,7 @@
 import streamlit as st
 from ui import st_calendar as st_calendarUI
 st.set_page_config(page_title="calendar App", page_icon="📆")
-#
-#mode = st.selectbox(
-#    "calendar Mode:",
-#    (
-#        "daygrid",
-#        "timegrid",
-#        "timeline",
-#        "resource-daygrid",
-#        "resource-timegrid",
-#        "resource-timeline",
-#        "list",
-#        "multimonth",
-#    ),
-#)
-#
+
 events = [
     {
         "title": "Event 1",
@@ -139,48 +125,3 @@ events = [
 ]
 cal = st_calendarUI.StCalendar(events=events)
 cal.show()
-#calendar_resources = [
-#    {"id": "a", "building": "Building A", "title": "Room A"},
-#    {"id": "b", "building": "Building A", "title": "Room B"},
-#    {"id": "c", "building": "Building B", "title": "Room C"},
-#    {"id": "d", "building": "Building B", "title": "Room D"},
-#    {"id": "e", "building": "Building C", "title": "Room E"},
-#    {"id": "f", "building": "Building C", "title": "Room F"},
-#]
-#
-#calendar_options = {
-#    "editable": "true",
-#    "navLinks": "true",
-#    "resources": calendar_resources,
-#    "selectable": "true",
-#}
-#
-
-#
-#state = calendar(
-#    events=st.session_state.get("events", events),
-#    options=calendar_options,
-#    custom_css="""
-#    .fc-event_management-past {
-#        opacity: 0.8;
-#    }
-#    .fc-event_management-time {
-#        font-style: italic;
-#    }
-#    .fc-event_management-title {
-#        font-weight: 700;
-#    }
-#    .fc-toolbar-title {
-#        font-size: 2rem;
-#    }
-#    """,
-#    key=mode,
-#)
-#
-#if state.get("eventsSet") is not None:
-#    st.session_state["events"] = state["eventsSet"]
-
-#st.write(state)
-
-#st.markdown("## API reference")
-#st.help(calendar)
