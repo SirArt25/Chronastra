@@ -1,5 +1,6 @@
 import streamlit as st
 from utilities.logic_error import LogicError
+import os
 
 class StCalendar:
     def __init__(self,*, style: str = None, events: list = None, calendar_resources: list = None,
@@ -9,15 +10,16 @@ class StCalendar:
 
         self._initialize_calendar_style(style=style)
 
-        self._mode = st.selectbox("calendar Mode:",
-                                  mode_opt,
-                                  )
+
         self._events = events
 
         self._initialize_calendar_resources(calendar_resources)
 
         self._initialize_calendar_opts(calendar_opts)
 
+    def show(self):
+        self._mode = st.selectbox("calendar Mode:",
+                             self._mode_opt,)
     def _initialize_calendar_opts(self, calendar_opts: dict = None):
         try:
             if calendar_opts is None:
@@ -55,14 +57,15 @@ class StCalendar:
                 "list",
                 "multimonth",
             )
-        self._mode = mode_opt
+        self._mode_opt = mode_opt
 
     def _initialize_calendar_style(self, file_path: str = None, *, style: str = None) -> None:
         if style is not None:
             self._style = style
         else:
             if file_path is None:
-                file_path = "../styles/calendar.css"
+                current_directory = os.path.dirname(os.path.abspath(__file__))
+                file_path = os.path.join(current_directory, '..', 'styles', 'calendar.css')
             with open(file_path, 'r') as file:
                 self._style = file.read()
 

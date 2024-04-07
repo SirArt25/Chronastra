@@ -1,5 +1,5 @@
 import streamlit as st
-import calendar.st_calendar
+from ui import st_calendar as st_calendarUI
 st.set_page_config(page_title="calendar App", page_icon="📆")
 #
 #mode = st.selectbox(
@@ -137,7 +137,8 @@ events = [
         "resourceId": "e",
     },
 ]
-cal = calendar.st_calendar.StCalendar(events=events)
+cal = st_calendarUI.StCalendar(events=events)
+cal.show()
 #calendar_resources = [
 #    {"id": "a", "building": "Building A", "title": "Room A"},
 #    {"id": "b", "building": "Building A", "title": "Room B"},
