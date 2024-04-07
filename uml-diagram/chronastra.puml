@@ -43,7 +43,7 @@ class EventsImporter{
 }
 
 class StCalendar{
-    + StCalendar(style: string, mode_opt: string, events: collection<Event>, calendar_opts: collection<Options>)
+    + StCalendar(style: string, mode_opt: set, events: collection<Event>, calendar_opts: collection<Options>)
     ===
     + setStyle(style: string): void
     + getStyle(): string
