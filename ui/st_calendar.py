@@ -1,37 +1,121 @@
 import streamlit as st
 from utilities.logic_error import LogicError
+from streamlit_calendar import calendar
 import os
 
-class StCalendar:
-    def __init__(self,*, style: str = None, events: list = None, calendar_resources: list = None,
-                 calendar_opts: dict = None, mode_opt: set = None):
 
+class StCalendar:
+    def __init__(self, *, style: str = None, events: list = None, calendar_resources: list = None,
+                 calendar_basic_opts: dict = None, mode_opt: set = None):
         self._initialize_mode_option(mode_opt)
 
         self._initialize_calendar_style(style=style)
-
 
         self._events = events
 
         self._initialize_calendar_resources(calendar_resources)
 
-        self._initialize_calendar_opts(calendar_opts)
+        self._initialize_calendar_basic_opts(calendar_basic_opts)
+
+        self._initialize_mapping_of_mods_and_options()
 
     def show(self):
         self._mode = st.selectbox("calendar Mode:",
-                             self._mode_opt,)
-    def _initialize_calendar_opts(self, calendar_opts: dict = None):
+                                  self._mode_opt, )
+
+        self._set_current_option()
+
+        self._calendar_wrapper = calendar(
+            events=st.session_state.get("events", self._events),
+            options=self._current_option,
+            custom_css=self._style,
+            key=self._mode,
+        )
+
+    def _initialize_mapping_of_mods_and_options(self):
+        self._mapping_of_mods_and_options = {
+            "resource-daygrid": {
+                **self._calendar_basic_opts,
+                "initialDate": "2024-03-01",
+                "initialView": "resourceDayGridDay",
+                "resourceGroupField": "building",
+            },
+
+            "resource-timeline": {
+                **self._calendar_basic_opts,
+                "headerToolbar": {
+                    "left": "today prev,next",
+                    "center": "title",
+                    "right": "resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth",
+                },
+                "initialDate": "2024-03-01",
+                "initialView": "resourceTimelineDay",
+                "resourceGroupField": "building",
+            },
+
+            "resource-timegrid":  {
+                **self._calendar_basic_opts,
+                "initialDate": "2024-03-01",
+                "initialView": "resourceTimeGridDay",
+                "resourceGroupField": "building",
+            },
+
+            "daygrid": {
+                **self._calendar_basic_opts,
+                "headerToolbar": {
+                    "left": "today prev,next",
+                    "center": "title",
+                    "right": "dayGridDay,dayGridWeek,dayGridMonth",
+                },
+                "initialDate": "2024-03-01",
+                "initialView": "dayGridMonth",
+            },
+
+            "timegrid": {
+                **self._calendar_basic_opts,
+                "initialView": "timeGridWeek",
+            },
+
+            "timeline":  {
+                **self._calendar_basic_opts,
+                "headerToolbar": {
+                    "left": "today prev,next",
+                    "center": "title",
+                    "right": "timelineDay,timelineWeek,timelineMonth",
+                },
+                "initialDate": "2024-03-01",
+                "initialView": "timelineMonth",
+            },
+
+            "list":  {
+                **self._calendar_basic_opts,
+                "initialDate": "2024-03-01",
+                "initialView": "listMonth",
+            },
+
+            "multimonth":  {
+                **self._calendar_basic_opts,
+                "initialView": "multiMonthYear",
+            }
+        }
+
+    def _set_current_option(self):
+         self._current_option = self._mapping_of_mods_and_options[self._mode]
+
+
+    def _initialize_calendar_basic_opts(self, calendar_basic_opts: dict = None):
         try:
-            if calendar_opts is None:
-                calendar_opts = {
+            if calendar_basic_opts is None:
+                calendar_basic_opts = {
                     "editable": "true",
                     "navLinks": "true",
                     "resources": self._calendar_resources,
                     "selectable": "true",
                 }
-            self._calendar_opts = calendar_opts
+            self._calendar_basic_opts = calendar_basic_opts
         except AttributeError:
-            raise LogicError("Called _initialize_calendar_resources without any _calendar_resources ")
+            raise LogicError("Called _initialize_calendar_basic_opts without any _calendar_resources ")
+        self._current_option = self._calendar_basic_opts
 
     def _initialize_calendar_resources(self, calendar_resources: list = None):
         if calendar_resources is None:
