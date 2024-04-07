@@ -2,18 +2,18 @@
 class Event{
     + Event(is_all_day: bool, start_date: Date, end_date: Date, title: string, url: string, resource_id: string,
         group_id: string)
-    + setAllDay(is_all_day: bool): void
-    + IsAllDay(): bool
-    + setStartDate(start_date: Date): void
-    + getStartDate(): Date
-    + setEndDate(end_date: Date): void
-    + getEndDate(): Date
-    + setStartStr(start_str: string): void
-    + getStartStr(): string
-    + setTitle(title: string): void
-    + getTitle(): string
-    + setUrl(url: string): void
-    + getUrl(): string
+    + set_all_day(is_all_day: bool): void
+    + is_all_day(): bool
+    + set_start_date(start_date: Date): void
+    + get_start_date(): Date
+    + set_end_date(end_date: Date): void
+    + get_end_date(): Date
+    + set_start_str(start_str: string): void
+    + get_start_str(): string
+    + set_title(title: string): void
+    + get_title(): string
+    + set_url(url: string): void
+    + get_url(): string
     ===
     - id: string
     - group_id: string
@@ -42,29 +42,39 @@ class EventsImporter{
     {static} + from_xml(xml_file: File): collection<Event>
 }
 
-class StCalendar{
-    + StCalendar(style: string, mode_opt: set, events: collection<Event>, calendar_opts: collection<Options>)
+class StCalendar {
+    +StCalendar(style: string, events: collection<Event>, calendar_resources: collection<Resource>,
+    calendar_basic_opts: collection<Option>, mode_opt: collection<string>)
     ===
-    + setStyle(style: string): void
-    + getStyle(): string
+    +show(): void
     ===
-    + setEvents(events: collection<Options>)
-    + getEvents(): collection<Event>
-    + addEvent(event: Event): void
-    + removeEvent(id: collection_id): void
+    +set_style(style: str): void
+    +get_style(): str
     ===
-    + getCalendarOpts(): collection<Option>
-    + setCalendarOpts(options: collection<Option>): void
-    + addCalendarOpt(option: Option): void
-    + removeCalendarOpt(id: collection_id): void
+    +set_events(events: list): void
+    +get_events(): list
+    +add_event(event): void
+    +remove_event(event_id: str): void
     ===
-    - mode: st.selectbox
-    - style: string
-    - events: collection<Event>
-    - calendar_opts: collection<Option>
-    - current_calendar_opt: Option
-    - calendar_wrapper: st.calendar
+    +get_calendar_opts(): list
+    +set_calendar_opts(options: list): void
+    +add_calendar_opt(option): void
+    +remove_calendar_opt(option_id: str): void
+    ===
+    +get_mode_opt(): str
+    +set_mode_opt(mode_opt: str): void
+    ===
+    -events: list
+    -calendar_resources: list
+    -calendar_basic_opts: dict
+    -mode_opt: set
+    -style: str
+    -mapping_of_mods_and_options: dict
+    -current_option: dict
+    -mode: str
 }
+
+
 
 StCalendar o-- Event
 Event ..> EventFormatter : dependency
