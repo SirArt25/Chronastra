@@ -2,6 +2,7 @@ import streamlit as st
 from utilities.logic_error import LogicError
 from streamlit_calendar import calendar
 import os
+import datetime
 
 
 class StCalendar:
@@ -36,7 +37,7 @@ class StCalendar:
         self._mapping_of_mods_and_options = {
             "resource-daygrid": {
                 **self._calendar_basic_opts,
-                "initialDate": "2024-03-01",
+                "initialDate": datetime.date.today().strftime("%Y-%m-%d"),
                 "initialView": "resourceDayGridDay",
                 "resourceGroupField": "building",
             },
@@ -48,14 +49,14 @@ class StCalendar:
                     "center": "title",
                     "right": "resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth",
                 },
-                "initialDate": "2024-03-01",
+                "initialDate": datetime.date.today().strftime("%Y-%m-%d"),
                 "initialView": "resourceTimelineDay",
                 "resourceGroupField": "building",
             },
 
             "resource-timegrid":  {
                 **self._calendar_basic_opts,
-                "initialDate": "2024-03-01",
+                "initialDate": datetime.date.today().strftime("%Y-%m-%d"),
                 "initialView": "resourceTimeGridDay",
                 "resourceGroupField": "building",
             },
@@ -67,7 +68,7 @@ class StCalendar:
                     "center": "title",
                     "right": "dayGridDay,dayGridWeek,dayGridMonth",
                 },
-                "initialDate": "2024-03-01",
+                "initialDate": datetime.date.today().strftime("%Y-%m-%d"),
                 "initialView": "dayGridMonth",
             },
 
@@ -83,13 +84,13 @@ class StCalendar:
                     "center": "title",
                     "right": "timelineDay,timelineWeek,timelineMonth",
                 },
-                "initialDate": "2024-03-01",
+                "initialDate": datetime.date.today().strftime("%Y-%m-%d"),
                 "initialView": "timelineMonth",
             },
 
             "list":  {
                 **self._calendar_basic_opts,
-                "initialDate": "2024-03-01",
+                "initialDate": datetime.date.today().strftime("%Y-%m-%d"),
                 "initialView": "listMonth",
             },
 
