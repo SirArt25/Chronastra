@@ -2,6 +2,8 @@ import json
 import xml.etree.ElementTree as ET
 from typing import List
 from event import Event
+
+
 class EventsExporter:
     @staticmethod
     def to_json(events: List[Event]) -> None:

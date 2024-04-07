@@ -1,6 +1,8 @@
 from typing import Dict
 from datetime import datetime
 from event import Event
+
+
 class EventFormatter:
     @staticmethod
     def to_skit_lean(event: Event) -> Dict:

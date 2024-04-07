@@ -3,6 +3,8 @@ import xml.etree.ElementTree as ET
 from datetime import datetime
 from typing import List
 from event import Event
+
+
 class EventsImporter:
     @staticmethod
     def from_json(json_file: str) -> List[Event]:
