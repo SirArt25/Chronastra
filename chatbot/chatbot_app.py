@@ -1,5 +1,8 @@
 import streamlit as st
 from chatbot.chatbot_engine import ChatBotEngine
+from utilities.json_processor import JSONProcessor
+import os
+
 
 class ChatbotApp:
     __instance = None
@@ -61,6 +64,8 @@ class ChatbotApp:
                 bot_response = self.__engine.invoke(schedule=user_input)
                 print(bot_response)
                 conversation.append(("bot", bot_response))
-                user_input = ""
+                json_processor = JSONProcessor(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                                            '..', '.data'))
+                json_processor.process(bot_response, "event.json","event.json")
             else:
                 st.warning("Please enter a message.")
