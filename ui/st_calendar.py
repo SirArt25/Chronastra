@@ -22,7 +22,7 @@ class StCalendar:
 
     def show(self):
         self._mode = st.selectbox("calendar Mode:",
-                                  self._mode_opt, )
+                                  self._mode_opt,)
 
         self._set_current_option()
 
