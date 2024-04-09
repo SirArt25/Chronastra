@@ -32,6 +32,7 @@ class ChatbotApp:
         if st.button("Send", key="send_button"):
             if user_input:
                 bot_response = self.__engine.invoke(schedule=user_input)
+                print(bot_response)
                 EventsExporter.from_raw_text_to_json(bot_response,
                                                      os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                                                   '..', '.data'),

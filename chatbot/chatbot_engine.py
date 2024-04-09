@@ -33,12 +33,15 @@ class ChatBotEngine:
             Do not add any tasks that are not included in this list.
             Don't give suggestions for time. Do not include free time on schedule. 
             if duration or end time is given explicitly include it,
-            if not set it to 5 minutes. Return format should be a json file and events will be list of json named, and,
+            if not set it to 5 minutes. Return format should be a json file and events will be list of json.
+            Every event should be contains 'start', 'end', 'title', 'url' and 'is-all-day'. Where 'start' is the start 
+            of event, 'end' is the end of event, and 'title' is the title of event, 'is-all-day' is bool if
+            the event is all day, 'url' is the url of event if it is exist, if not it should be empty string.
             where should be specified start time as a start, end time as a end, title as a title, if its is all day 
             as a is-all-day, url as a url. 
             Make time calculations starting from {formatted_datetime}. for start-time and end-time.
             The time should be interpreted in the format of ISO 8601.
-            Please give a only code. If you don't know the answer,
+            Please give me a json, nothing more. If you don't know the answer,
             just say that you don't know, don't try to make up an answer."""
         self._template = template
 
