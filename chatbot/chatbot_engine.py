@@ -40,7 +40,6 @@ class ChatBotEngine:
             The time should be interpreted in the format of ISO 8601.
             Please give a only code. If you don't know the answer,
             just say that you don't know, don't try to make up an answer."""
-        print(template)
         self._template = template
 
     def _initialize_llm(self, llm: Optional[BaseLanguageModel] = None):

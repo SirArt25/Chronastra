@@ -1,6 +1,6 @@
 import streamlit as st
 from chatbot.chatbot_engine import ChatBotEngine
-from utilities.json_processor import JSONProcessor
+from event_management.events_exporter import EventsExporter
 import os
 
 
@@ -19,53 +19,23 @@ class ChatbotApp:
     def show(self):
         # Streamlit UI
         # Custom CSS styles
+
+        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'styles', 'text_field.css'), 'r') as f:
+            style = f.read()
         st.markdown(
-            """
-            <style>
-            /* Container for chat messages */
-            .chat-container {
-                max-width: 800px;
-                margin-bottom: 20px;
-                padding: 10px;
-                border-radius: 10px;
-                background-color: #f0f0f0;
-            }
-            /* User message style */
-            .user-msg {
-                background-color: #00b894;
-                color: white;
-                border-radius: 5px;
-                padding: 10px;
-                margin-bottom: 10px;
-                align-self: flex-end;
-            }
-            /* Bot message style */
-            .bot-msg {
-                background-color: #0984e3;
-                color: white;
-                border-radius: 5px;
-                padding: 10px;
-                margin-bottom: 10px;
-            }
-            </style>
-            """,
+            style,
             unsafe_allow_html=True
         )
-        # Chat container
-        chat_container = st.empty()
-        conversation = []
-
         # User input
         user_input: str | None = st.text_input("You:", "")
 
         if st.button("Send", key="send_button"):
             if user_input:
-                conversation.append(("user", user_input))
                 bot_response = self.__engine.invoke(schedule=user_input)
-                print(bot_response)
-                conversation.append(("bot", bot_response))
-                json_processor = JSONProcessor(os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                                            '..', '.data'))
-                json_processor.process(bot_response, "event.json","event.json")
+                EventsExporter.from_raw_text_to_json(bot_response,
+                                                     os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                                                  '..', '.data'),
+                                                     "event.json",
+                                                     "event.json")
             else:
                 st.warning("Please enter a message.")

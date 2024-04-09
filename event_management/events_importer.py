@@ -2,27 +2,31 @@ import json
 import xml.etree.ElementTree as ET
 from datetime import datetime
 from typing import List
-from event import Event
-
+from event_management.event import Event
+import os
 
 class EventsImporter:
     @staticmethod
     def from_json(json_file: str) -> List[Event]:
-        events = []
-        with open(json_file, 'r') as file:
-            data = json.load(file)
-            for event_data in data:
-                event = Event(
-                    is_all_day=event_data['is_all_day'],
-                    start_date=datetime.fromisoformat(event_data['start_date']),
-                    end_date=datetime.fromisoformat(event_data['end_date']),
-                    title=event_data['title'],
-                    url=event_data['url'],
-                    group_id=event_data.get('group_id'),
-                    resource_id=event_data.get('resource_id')
-                )
-                events.append(event)
-        return events
+        if not os.path.exists(json_file):
+            return []
+        
+        if os.path.getsize(json_file) == 0:
+            return []
+
+        try:
+            events = []
+            with open(json_file, 'r') as f:
+                data = json.load(f)
+                for events_raw in data:
+                    for event in events_raw['events']:
+                        print(event)
+                        print(event['id'])
+            return events
+        except Exception as e:
+            return []
+
+         
 
     @staticmethod
     def from_xml(xml_file: str) -> List[Event]:

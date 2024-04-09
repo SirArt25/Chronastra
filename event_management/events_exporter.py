@@ -1,4 +1,5 @@
 import json
+import os
 import xml.etree.ElementTree as ET
 from typing import List
 from event import Event
@@ -22,6 +23,25 @@ class EventsExporter:
             event_list.append(event_dict)
         with open('events.json', 'w') as json_file:
             json.dump(event_list, json_file, indent=4)
+
+    @staticmethod
+    def from_raw_text_to_json(self, raw_data, directory, existing_file_name, new_file_name):
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+
+        existing_file_path = os.path.join(directory, existing_file_name)
+        new_file_path = os.path.join(directory, new_file_name)
+
+        if os.path.exists(existing_file_path):
+            with open(existing_file_path, 'r') as f:
+                existing_data = json.loads(f.read())
+        else:
+            existing_data = []
+
+        existing_data.append(json.loads(raw_data))
+
+        with open(new_file_path, 'w') as file:
+            file.write(json.dumps(existing_data, indent=4))
 
     @staticmethod
     def to_xml(events: List[Event]) -> None:
