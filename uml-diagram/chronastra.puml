@@ -1,4 +1,5 @@
 @startuml
+
 class Event{
     + Event(is_all_day: bool, start_date: Date, end_date: Date, title: string, url: string, resource_id: string,
         group_id: string)
@@ -30,6 +31,24 @@ class Event{
     - title: string
     - url: string
     - resource_id: string
+}
+
+class ChatBotEngine {
+    + {static} create_engine(): ChatbotEngine
+    ===
+    + invoke(schedule: String): String
+    ===
+    - initialize_template(template: Optional[str] = None)
+    - initialize_llm(llm: Optional[BaseLanguageModel] = None)
+    ===
+    - template: str
+    - llm: BaseLanguageModel
+}
+
+class ChatbotApp  << (S,#FF7700) Singleton >> {
+    + create_chat_bot_app(engine: ChatBotEngine) : ChatbotApp
+    ===
+    + show(): void
 }
 
 
@@ -83,7 +102,10 @@ class StCalendar {
 
 
 StCalendar o-- Event
+ChatbotApp *-- ChatBotEngine
 Event ..> EventFormatter : dependency
 Event ..> EventsExporter : dependency
 Event ..> EventsImporter : dependency
+ChatbotApp --> EventsExporter : uses
+ChatBotEngine  <.. "1" BaseLanguageModel : dependency
 @enduml

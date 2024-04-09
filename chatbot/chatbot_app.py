@@ -6,7 +6,6 @@ import os
 
 class ChatbotApp:
     __instance = None
-    __member_called = {}
 
     def __new__(cls, *args, **kwargs):
         if cls.__instance is None:
@@ -14,7 +13,7 @@ class ChatbotApp:
         return cls.__instance
 
     def __init__(self, engine: ChatBotEngine):
-        self.__engine = engine
+        self._engine = engine
 
     def show(self):
         # Streamlit UI
@@ -31,8 +30,7 @@ class ChatbotApp:
 
         if st.button("Send", key="send_button"):
             if user_input:
-                bot_response = self.__engine.invoke(schedule=user_input)
-                print(bot_response)
+                bot_response = self._engine.invoke(schedule=user_input)
                 EventsExporter.from_raw_text_to_json(bot_response,
                                                      os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                                                   '..', '.data'),
