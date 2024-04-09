@@ -3,7 +3,7 @@ from utilities.logic_error import LogicError
 from streamlit_calendar import calendar
 import os
 import datetime
-
+from event_management.event_formatter import EventFormatter
 
 class StCalendar:
     def __init__(self, *, style: str = None, events: list = None, calendar_resources: list = None,
@@ -11,7 +11,6 @@ class StCalendar:
         self._initialize_mode_option(mode_opt)
 
         self._initialize_calendar_style(style=style)
-
         self._events = events
 
         self._initialize_calendar_resources(calendar_resources)
@@ -25,9 +24,8 @@ class StCalendar:
                                   self._mode_opt,)
 
         self._set_current_option()
-
         self._calendar_wrapper = calendar(
-            events=st.session_state.get("events", self._events),
+            events=st.session_state.get("events",  list(map(EventFormatter.to_skit_lean, self._events))),
             options=self._current_option,
             custom_css=self._style,
             key=self._mode,

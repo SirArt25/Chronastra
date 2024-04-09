@@ -2,7 +2,7 @@ import json
 import os
 import xml.etree.ElementTree as ET
 from typing import List
-from event import Event
+from event_management.event import Event
 
 
 class EventsExporter:
@@ -25,7 +25,12 @@ class EventsExporter:
             json.dump(event_list, json_file, indent=4)
 
     @staticmethod
-    def from_raw_text_to_json(self, raw_data, directory, existing_file_name, new_file_name):
+    def fill_fields_of_raw_events(raw_events_json):
+        # add it before
+        return raw_events_json
+
+    @staticmethod
+    def from_raw_text_to_json(raw_data, directory, existing_file_name, new_file_name):
         if not os.path.exists(directory):
             os.makedirs(directory)
 
@@ -38,7 +43,8 @@ class EventsExporter:
         else:
             existing_data = []
 
-        existing_data.append(json.loads(raw_data))
+        json_data = EventsExporter.fill_fields_of_raw_events(json.loads(raw_data))
+        existing_data.append(json_data)
 
         with open(new_file_path, 'w') as file:
             file.write(json.dumps(existing_data, indent=4))

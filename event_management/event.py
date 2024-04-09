@@ -3,8 +3,8 @@ import uuid
 
 
 class Event:
-    def __init__(self, is_all_day: bool, start_date: datetime, end_date: datetime, title: str,
-                 url: str, group_id: str = None, resource_id: str = None):
+    def __init__(self,*, is_all_day: bool, start_date: datetime, end_date: datetime, title: str,
+                 url: str = None, group_id: str = None, resource_id: str = None):
         self._id = str(uuid.uuid4())
         self._is_all_day = is_all_day
         self._start_date = start_date

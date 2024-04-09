@@ -1,6 +1,6 @@
 from typing import Dict
 from datetime import datetime
-from event import Event
+from event_management.event import Event
 
 
 class EventFormatter:
@@ -8,8 +8,8 @@ class EventFormatter:
     def to_skit_lean(event: Event) -> Dict:
         return {
             'title': event.get_title(),
-            'start_time': event.get_start_date().strftime("%Y-%m-%d %H:%M:%S"),
-            'end_time': event.get_end_date().strftime("%Y-%m-%d %H:%M:%S")
+            'start': event.get_start_date(),
+            'end': event.get_end_date()
         }
 
     @staticmethod

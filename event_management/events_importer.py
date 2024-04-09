@@ -14,17 +14,20 @@ class EventsImporter:
         if os.path.getsize(json_file) == 0:
             return []
 
+        events = []
         try:
-            events = []
             with open(json_file, 'r') as f:
                 data = json.load(f)
                 for events_raw in data:
-                    for event in events_raw['events']:
-                        print(event)
-                        print(event['id'])
-            return events
+                    for event_dict in events_raw['events']:
+                        event = Event(is_all_day= event_dict['is-all-day'],
+                                      start_date= event_dict['start'],
+                                      end_date= event_dict['end'],
+                                      title= event_dict['title'])
+                        events.append(event)
         except Exception as e:
-            return []
+            print(f"There is Exception \n {e}")
+        return events
 
          
 

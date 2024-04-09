@@ -34,7 +34,7 @@ class ChatBotEngine:
             Don't give suggestions for time. Do not include free time on schedule. 
             if duration or end time is given explicitly include it,
             if not set it to 5 minutes. Return format should be a json file and events will be list of json named, and,
-            where should be specified start time as a start, end time as a end, title as a title, is all day 
+            where should be specified start time as a start, end time as a end, title as a title, if its is all day 
             as a is-all-day, url as a url. 
             Make time calculations starting from {formatted_datetime}. for start-time and end-time.
             The time should be interpreted in the format of ISO 8601.
