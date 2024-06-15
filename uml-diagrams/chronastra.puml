@@ -1,0 +1,111 @@
+@startuml
+
+class Event{
+    + Event(is_all_day: bool, start_date: Date, end_date: Date, title: string, url: string, resource_id: string,
+        group_id: string)
+    ===
+    + set_all_day(is_all_day: bool): void
+    + is_all_day(): bool
+    ===
+    + set_start_date(start_date: Date): void
+    + get_start_date(): Date
+    ===
+    + set_end_date(end_date: Date): void
+    + get_end_date(): Date
+    ===
+    + set_start_str(start_str: string): void
+    + get_start_str(): string
+    ===
+    + set_title(title: string): void
+    + get_title(): string
+    ===
+    + set_url(url: string): void
+    + get_url(): string
+    ===
+    - id: string
+    - group_id: string
+    - is_all_day: bool
+    - start_date: Date
+    - end_date: Date
+    - start_str: string
+    - title: string
+    - url: string
+    - resource_id: string
+}
+
+class ChatBotEngine {
+    + {static} create_engine(): ChatbotEngine
+    ===
+    + invoke(schedule: String): String
+    ===
+    - initialize_template(template: Optional[str] = None)
+    - initialize_llm(llm: Optional[BaseLanguageModel] = None)
+    ===
+    - template: str
+    - llm: BaseLanguageModel
+}
+
+class ChatbotApp  << (S,#FF7700) Singleton >> {
+    + create_chat_bot_app(engine: ChatBotEngine) : ChatbotApp
+    ===
+    + show(): void
+}
+
+
+class EventFormatter{
+    {static} + to_skit_lean(event: Event): Dict
+    {static} + to_outlook(event: Event): Unknown
+}
+
+class EventsExporter{
+    {static} + to_json(collection<Event>: events): void
+    {static} + to_xml(collection<Event>: events): void
+}
+
+class EventsImporter{
+    {static} + from_json(json_file: File): collection<Event>
+    {static} + from_xml(xml_file: File): collection<Event>
+}
+
+class StCalendar {
+    +StCalendar(style: string, events: collection<Event>, calendar_resources: collection<Resource>,
+    calendar_basic_opts: collection<Option>, mode_opt: collection<string>)
+    ===
+    +show(): void
+    ===
+    +set_style(style: str): void
+    +get_style(): str
+    ===
+    +set_events(events: list): void
+    +get_events(): list
+    +add_event(event): void
+    +remove_event(event_id: str): void
+    ===
+    +get_calendar_opts(): list
+    +set_calendar_opts(options: list): void
+    +add_calendar_opt(option): void
+    +remove_calendar_opt(option_id: str): void
+    ===
+    +get_mode_opt(): str
+    +set_mode_opt(mode_opt: str): void
+    ===
+    -events: list
+    -calendar_resources: list
+    -calendar_basic_opts: dict
+    -mode_opt: set
+    -style: str
+    -mapping_of_mods_and_options: dict
+    -current_option: dict
+    -mode: str
+}
+
+
+
+StCalendar o-- Event
+ChatbotApp *-- ChatBotEngine
+Event ..> EventFormatter : dependency
+Event ..> EventsExporter : dependency
+Event ..> EventsImporter : dependency
+ChatbotApp --> EventsExporter : uses
+ChatBotEngine  <.. "1" BaseLanguageModel : dependency
+@enduml
